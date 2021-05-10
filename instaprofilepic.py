@@ -1,7 +1,30 @@
-#pip install instaloader
-import instaloader
+import requests
+from PIL import Image
+from io import BytesIO
+from bs4 import BeautifulSoup
+import re, sys
 
-ig = instaloader.Instaloader()
-dp = input("Enter Insta Username:")
+def image(username):
+    url = "https://www.instagram.com/{}/".format(username)
 
-ig.download_profile(dp, profile_pic_only = True)
+    session = requests.session()
+    #header parameter is used to resolve the bad gateway 502 error
+
+    #opening the URL and parsing it into BeautifulSoup
+    try:
+        html = session.get(url, headers={'User-Agent': 'Mozilla/5.0'}).text
+    except:
+        raise("PageNotFound")
+        sys.exit()
+
+    soup = BeautifulSoup(html, 'html.parser')
+    tags = soup.find_all('body')
+
+    #using regualr expression to extract the image URL
+    profile_pic_url_hd = re.findall(r"profile_pic_url_hd\":\"([\S]+?)\"",str(tags[0]))[0].replace(r'\u0026', '&')
+
+    response = session.get(profile_pic_url_hd, headers={'User-Agent': 'Mozilla/5.0'}).content
+    img = Image.open(BytesIO(response))
+    img.show()
+    img.save("{}.png".format(username))
+
