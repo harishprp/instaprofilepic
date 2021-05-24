@@ -1,3 +1,4 @@
+apt install lolcat -y
 pip install lolcat
 echo '
        __Hey guys :)
@@ -20,3 +21,11 @@ apt install cmatrix -y
 apt install pip -y
 apr install openssh -y
 apt install nano -y
+apt install ruby -y
+apt install cowsay -y
+apt install toilet -y
+apt install cmatrix -y
+
+echo "" 
+Now All set you can run instaprofilepic.py
+echo ""
