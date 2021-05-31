@@ -25,6 +25,8 @@ apt install ruby -y
 apt install cowsay -y
 apt install toilet -y
 apt install cmatrix -y
+pip install instaloader -y
+
 
 echo "" 
 Now All set you can run instaprofilepic.py
